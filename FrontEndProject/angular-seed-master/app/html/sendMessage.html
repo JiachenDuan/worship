@@ -1,0 +1,18 @@
+<div class="container">
+
+    <form class="form-signin">
+
+        <label for="inputEmail" class="sr-only">receiver</label>
+        <input id="inputEmail" class="form-control" placeholder="Receiver" ng-model = "receiver" required autofocus>
+
+        <input  class="form-control" placeholder="Subject" ng-model = "subject" required>
+        <textarea class="form-control" rows="8" ng-model = "content"></textarea>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click = "sendMessage()" >Send</button>
+        <div class="alert alert-danger" ng-show="authenticationFailed" role="alert">{{errorMessage}}
+        </div>
+        <div class="alert alert-success" ng-show="signupSuccesseed" role="alert">{{signupSuccesseedMessage}}
+        </div>
+    </form>
+
+</div> <!-- /container -->

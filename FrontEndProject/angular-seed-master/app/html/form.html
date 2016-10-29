@@ -1,0 +1,100 @@
+<div class="container">
+
+    <form class="form-signin">
+        <!--<h2 class="form-signin-heading">Please sign up</h2>-->
+        <!--<sel selected-value="option"></sel>-->
+
+        <!--<div class="row">-->
+            <!--<div class="col-sm-1">-->
+                <sel selected-value="option"></sel>
+            <!--</div>-->
+            <!--<div class="col-sm-1">-->
+                <div class="input-group">
+
+                       <input type="checkbox" ng-model="checkedleft"  aria-label="...">
+                        <!--<checkleftBox></checkleftBox>-->
+                        <label>Left </label>
+                     <span>
+                        <input type="checkbox" ng-model="checkedright" aria-label="...">
+                        <label>Right </label>
+                     </span>
+                </div><!-- /input-group -->
+            <!--</div>&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
+        <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+        <!--<button ng-click = "check()">click </button>-->
+
+
+        <!--<div class="input-group">-->
+            <!--<span class="input-group-addon" id="sizing-addon2">Condition: (0-5)</span>-->
+            <!--<input type="text" class="form-control" ng-model = "condition" aria-describedby="sizing-addon2">-->
+        <!--</div>-->
+
+        <!--<div class="input-group">-->
+            <!--<span class="input-group-addon">Price: $</span>-->
+            <!--<input type="text" class="form-control" ng-model = "price"  aria-label="Amount (to the nearest dollar)">-->
+
+        <!--</div>-->
+
+        <!--<div class="input-group">-->
+            <!--<span class="input-group-addon">Description: </span>-->
+            <!--<input type="text" class="form-control" ng-model = "description">-->
+
+        <!--</div>-->
+
+        <div>
+            <input  name="element_5_1" class="element text large" value="" ng-model = "condition" type="text">
+            <label for="element_5_1">Condition (0-5)</label>
+        </div>
+        <div class="left">
+            <input  name="element_5_3" class="element text medium" value="" ng-model = "price" type="text">
+            <label for="element_5_3">Price ($)</label>
+        </div>
+
+        <div class="right">
+            <textarea name="element_5_4" class="form-control" rows="4" ng-model = "description" placeholder="Description:"></textarea>
+            <!--<input  name="element_5_4" class="element text medium" value="" ng-model = "description" type="text">-->
+            <!--<label for="element_5_4">Description</label>-->
+        </div>
+
+        <!--<button ng-click="checkAddress()">test</button>-->
+
+        <input type="checkbox" ng-model="checked" ng-change="addressShow(checked)" aria-label="...">
+        <label>Use current location as address</label>
+
+        <div ng-show="showAddress">
+
+
+                <div>
+                    <input id="element_5_1" name="element_5_1" class="element text large" value="" ng-model="street" type="text">
+                    <label for="element_5_1">Street Address</label>
+                </div>
+                <div class="left">
+                    <input id="element_5_3" name="element_5_3" class="element text medium" value="" ng-model="city" type="text">
+                    <label for="element_5_3">City</label>
+                </div>
+
+                <div class="right">
+                    <input id="element_5_4" name="element_5_4" class="element text medium" value="" ng-model="state" type="text">
+                    <label for="element_5_4">State</label>
+                </div>
+
+                <div class="left">
+                    <input id="element_5_5" name="element_5_5" class="element text medium" maxlength="15" ng-model="zip" value=""
+                           type="text">
+                    <label for="element_5_5">Zip</label>
+                </div>
+
+                <div class="right">
+                    <select class="element select medium" ng-options="country as country.name for country in countries" ng-model = "selectedCountry" id="element_5_6" name="element_5_6">
+
+                    </select>
+
+                </div>
+            </li>
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit"  ng-click = "submit()" >Post</button>
+        <!--<div class="alert alert-danger" ng-show="dupUserError" role="alert">{{duplicateUserError}}</div>-->
+    </form>
+
+</div> <!-- /container -->

@@ -1,0 +1,41 @@
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="business in userBusinesses| orderBy:'postDate':true"
+            ng-class="{'closed':business.status == false}">
+            <span class="badge" ng-show="business.status == true" ng-click="goToEdit(business._id)">Edit</span>
+            <span class="badge" ng-show="business.status == true"
+                  ng-click="closebusiness(business._id)">Close Business</span>
+
+            <h5 class="text-left">ACTION:
+                <small class="text-right"> {{business.action}}</small>
+            </h5>
+            <h5 class="text-left">PRICE:
+                <small class="text-right"> {{business.price}}</small>
+            </h5>
+            <h5 class="text-left">LEFT/RIGHT/BOTH:
+                <small class="text-right"> {{business.leftorright}}</small>
+            </h5>
+            <h5 class="text-left">CONDITION:
+                <small class="text-right"> {{business.condition}}</small>
+            </h5>
+            <h5 class="text-left">POSTDATE:
+                <small class="text-right"> {{business.postDate| date:'MM/dd/yyyy @ h:mma'}}</small>
+            </h5>
+            <h5 class="text-left">DESCRIPTION:
+                <small class="text-right"> {{business.description}}</small>
+            </h5>
+            <h5 class="text-left" ng-show="business.address !== undefined">ADDRESS:
+                <small class="text-right"> {{business.address.street}}<br>
+                    {{business.address.city}}, {{business.address.state}}, {{business.address.country}},
+                    {{business.address.zip}}<br>
+                </small>
+            </h5>
+            <h5 class="text-left" ng-show="business.address === undefined">ADDRESS:
+                <small class="text-right"> Use current location as business address
+                </small>
+            </h5>
+
+        </li>
+    </ul>
+
+</div>

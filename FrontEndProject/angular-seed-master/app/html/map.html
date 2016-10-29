@@ -1,0 +1,131 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-7 col-xs-12 col-md-7 col-lg-7 middle">
+            <div class="map_canvas">
+                <ui-gmap-google-map id="my-map"
+                                    center="map.center"
+                                    zoom="map.zoom"
+                                    draggable="true">
+                    <ui-gmap-window show="map.window.show"
+                                    coords="map.window.model"
+                                    options="map.window.options"
+                                    closeClick="map.window.closeClick()"
+                                    templateUrl="'infowindow.tpl.html'"
+                                    templateParameter="map.window.model">
+                    </ui-gmap-window>
+
+
+                    <ui-gmap-markers
+                            models="map.markers"
+                            idKey="'id'"
+                            coords="'self'"
+                            events="map.markersEvents"
+                            options="'options'">
+                    </ui-gmap-markers>
+
+                </ui-gmap-google-map>
+            </div>
+
+            <!--<ul class="location-list">-->
+            <!--<li ng-repeat="location in map.markers" ng-class="{selected: location == map.window.model}" ng-click="map.window.model = location">-->
+            <!--Location #{{location.id}} is at: ({{location.latitude}}, {{location.longitude}})-->
+            <!--</li>-->
+            <!--</ul>-->
+            <!--<br>-->
+            <!--<span>window:{{map.window}}</span>-->
+
+        </div>
+        <div class="col-sm-5 col-xs-12 col-md-5 col-lg-5  main nopadding" ng-show="emptyBusiness">
+            Woops, There is no any airpods business ever posted around your search area!
+        </div>
+        <div class="col-sm-5 col-xs-12 col-md-5 col-lg-5  main nopadding" ng-show="!emptyBusiness">
+            <!--<h1 class="page-header">Detailed Post</h1>-->
+            <div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src={{imageUrl}} width="200" height="200" class="img-responsive"
+                         alt="Generic placeholder thumbnail">
+                    <h4>{{rowSelected.action}} {{rowSelected.leftorright}}</h4>
+                    <span class="text-muted">${{rowSelected.price}}</span>
+                </div>
+                <div class="col-xs-6 col-sm-9 placeholder">
+                    <h5 class="text-left">USERNAME:
+                        <small class="text-right"> {{rowSelected.username}}</small>
+                    </h5>
+                    <h5 class="text-left">CONDITION:
+                        <small class="text-right"> {{rowSelected.condition}}</small>
+                    </h5>
+                    <h5 class="text-left">POSTDATE:
+                        <small class="text-right"> {{rowSelected.postDate| date:'MM/dd/yyyy @ h:mma'}}</small>
+                    </h5>
+                    <h5 class="text-left">DESCRIPTION:
+                        <small class="text-right"> {{rowSelected.description}}</small>
+                    </h5>
+                    <h5 class="text-left" ng-show="addressDefined">ADDRESS:
+                        <small class="text-right"> {{rowSelected.street}}<br>
+                            {{rowSelected.city}}, {{rowSelected.state}}, {{rowSelected.country}},
+                            {{rowSelected.zipcode}}<br></small>
+                    </h5>
+                    <button class="btn btn-default" ng-show="notCurrentUserPosted"
+                            ng-click="goToSendPage(rowSelected.username)">Send Message
+                    </button>
+                </div>
+
+            </div>
+
+            <h2 class="sub-header">Airpods List</h2>
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>
+                            <a ng-click="sortBy('price')">
+                                Price
+                                <span class="sortorder"ng-show="sortType === 'price'" ng-class="{reverse: reverse}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="sortBy('leftorright')">
+                                Which One
+                                <span  class="sortorder" ng-show="sortType === 'leftorright'" ng-class="{reverse: reverse}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="sortBy('action')">
+                                Action
+                                <span class="sortorder" ng-show="sortType === 'action'" ng-class="{reverse: reverse}"></span>
+
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="sortBy('condition')">
+                                Condition
+                                <span class="sortorder" ng-show="sortType === 'condition'" ng-class="{reverse: reverse}"></span>
+
+                            </a>
+                        </td>
+                        <td>
+                            <a ng-click="sortBy('postDate')">
+                                Posted
+                                <span class="sortorder" ng-show="sortType === 'postDate' " ng-class="{reverse: reverse}"></span>
+
+                            </a>
+                        </td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="info in map.markers| orderBy:sortType:reverse"
+                        ng-class="{'selected':info == map.window.model}" ng-click="setClickedRow($index)">
+                        <td>{{info.price}}</td>
+                        <td>{{info.leftorright}}</td>
+                        <td>{{info.action}}</td>
+                        <td>{{info.condition}}</td>
+                        <td>{{info.postDate|amDifference : null : 'days'|positive}} days ago</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

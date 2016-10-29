@@ -1,0 +1,155 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3 nopadding middle">
+            <!--<button class="btn btn-lg btn-primary btn-block" ng-click="createMessage()"> COMPOSE</button>-->
+            <ul class="list-group">
+                <li class="list-group-item" ng-click="getInboxMessage()">
+                    Inbox({{messages.length}})
+                </li>
+                <li class="list-group-item" ng-click="getSendboxMessage()">
+                    Sent Mail
+                </li>
+                <li class="list-group-item">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9 nopadding ">
+            <div class="list-fixed_height">
+                <button type="button" class="btn btn-default " aria-label="Left Align" ng-show="selectMessage"
+                        ng-click="deleteMessages()">
+                    <span class="glyphicons glyphicon-trash" aria-hidden="true"></span>
+                </button>
+                <div ng-show="!viewSentMessage&&!viewDetailedMessage">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat='message in messages'
+                            ng-class="{'unReadMessage':message.isRead == false}">
+                            <div class="row">
+                                <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="checkboxChecked"
+                                                   ng-change="showTrashcan(checkboxChecked,message._id,$index)"
+                                                   ng-disabled="checked==limit && !checkboxChecked"
+                                            >
+                                        </label>
+                                    </div>
+                                </div>
+                                <div ng-click="readChecked(message._id,$index)">
+                                    <div class="col-sm-2 col-xs-2 col-md-2 col-lg-2">
+                                        {{message.senderName}}
+                                    </div>
+                                    <div class="col-sm-5 col-xs-5 col-md-5 col-lg-5">
+                                        <p>
+                                            {{message.subject}}
+                                            <span
+                                                    class="contentText">{{message.content |subString:6}}
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                                        {{message.sentDate| date:'MM/dd/yyyy @ h:mma'}}
+                                        <!--<span class="badge" ng-click="readChecked(message._id)">read</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="row" ng-show="viewDetailedMessage">
+
+                    <div class="btn-group col-sm-12">
+                        <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="goBackToMailList()">
+                            <span class="glyphiconn glyphicon-arrow-left" aria-hidden="true">Back</span>
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Center Align" ng-click="goReply()">
+                            <span class="glyphiconn glyphicon-share-alt" aria-hidden="true">Reply</span>
+                        </button>
+                        <button type="button" class="btn btn-default" aria-label="Right Align" ng-click="sendReplyMessage()">
+                            <span class="glyphiconn glyphicon-send" aria-hidden="true">Send</span>
+                        </button>
+                    </div>
+                    <!--<span class="badge" ng-click="goBackToMailList()">back</span>-->
+
+                    <table class="body-wrap">
+                        <tr>
+                            <td></td>
+                            <td class="container" bgcolor="#FFFFFF">
+
+                                <div class="content">
+                                    <table>
+                                        <tr>
+                                            <td>
+
+                                                <p class="callout">
+                                                    <span class="glyphiconn glyphicon-user" aria-hidden="true"></span>
+                                                    {{detailedMessage.senderName}} <a class="view-block">To me</a>
+                                                    {{detailedMessage.sentDate|date:'MM/dd/yyyy @ h:mma'}}
+
+                                                </p>
+                                                <h3>{{detailedMessage.subject}}</h3>
+                                                <p class="lead">{{detailedMessage.content.split('*****')[0]}}</p>
+                                                <p>----- Forwarded Message -----
+                                                    From: {{detailedMessage.content.split('*****')[1]}}
+
+                                                </p>
+
+                                                <p>----- Forwarded Message -----
+                                                    From: {{detailedMessage.content.split('*****')[2]}}
+
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div><!-- /content -->
+
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table><!-- /BODY -->
+                    <!--<span class="badge" ng-click="goReply()">reply</span>-->
+                    <!--<span class="badge" ng-click="sendReplyMessage()">send</span>-->
+                    <div ng-show="clickReply">
+                        <textarea class="form-control" rows="8" ng-model="replyContent"></textarea>
+
+                        <button type="button" class="btn btn-default" aria-label="Left Align"
+                                ng-click="showDetailedReplyMessage()">
+                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                        </button>
+                        <textarea class="form-control" rows="8" ng-show="showReplyContent"
+                                  ng-model="messageContent"></textarea>
+                    </div>
+                </div>
+
+                <div ng-show="viewSentMessage">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat='sentMessage in sentMessages'>
+                            <div class="row">
+                                <div class="col-sm-1 col-xs-1 col-md-1 col-lg-1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="checkboxChecked"
+                                                   ng-change="showTrashcan(checkboxChecked,sentMessage._id,$index)">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-xs-2 col-md-2 col-lg-2">
+                                    {{sentMessage.receiverName}}
+                                </div>
+                                <div class="col-sm-5 col-xs-5 col-md-5 col-lg-5">
+                                    {{sentMessage.subject}}
+                                    <span><p class="contentText">{{sentMessage.content | subString:10}}</p></span>
+                                </div>
+                                <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3">
+                                    {{sentMessage.sentDate| date:'MM/dd/yyyy @ h:mma'}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

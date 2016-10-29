@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html lang="en" ng-app="AirPod" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="AirPod" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="AirPod" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="AirPod" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>AirPodsLost</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">-->
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/email.css" rel="stylesheet">
+    <!-- red bagdge styles for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- post form CSS  -->
+    <!--<link rel="stylesheet" type="text/css" href="css/view.css" media="all">-->
+    <!--<script type="text/javascript" src="css/view.js"></script>-->
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--&lt;!&ndash;[if lt IE 9]><!--<script src="../../assets/js/ie8-responsive-file-warning.js"></script>--><![endif]&ndash;&gt;-->
+    <!--<script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+
+    <!--enable responsive design-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <!--<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">-->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaBiOqxtGxQUoDrlb9nGlJA1I_L0qmY6Y"
+            type="text/javascript"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src='bower_components/angular-simple-logger/dist/angular-simple-logger.js'></script>
+    <!--<script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>-->
+    <script src='bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/moment/locale/de.js"></script>
+    <script src="javascript/app.js"></script>
+    <script src="javascript/controllers/navigationController.js"></script>
+    <script src="javascript/controllers/loginController.js"></script>
+    <script src="javascript/controllers/signupController.js"></script>
+    <script src="javascript/controllers/businessFormController.js"></script>
+    <script src="javascript/controllers/welcomeController.js"></script>
+    <script src="javascript/controllers/mapController.js"></script>
+    <script src="javascript/controllers/postInfoController.js"></script>
+    <script src="javascript/controllers/sendMessageController.js"></script>
+    <script src="javascript/controllers/listMessageController.js"></script>
+    <script src="javascript/factories/loginFactory.js"></script>
+    <script src="javascript/factories/welcomeFactory.js"></script>
+    <script src="javascript/factories/formFactory.js"></script>
+    <script src="javascript/factories/messageFactory.js"></script>
+    <script src="javascript/services.js"></script>
+    <script src="javascript/directives.js"></script>
+    <script src="javascript/filters.js"></script>
+    <script src="components/version/version.js"></script>
+    <script src="components/version/version-directive.js"></script>
+    <script src="components/version/interpolate-filter.js"></script>
+  </head>
+
+  <body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller = "navCtrl">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" ng-click="goMap()">AirPodsLOST</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right navbar-menus">
+          <li><a ng-show="!notauthenciated">{{username}}</a></li>
+          <li><a ng-show="atMapPage"ng-click="gobuy()">Buy</a></li>
+          <li><a ng-show="atMapPage" ng-click="gosell()">Sell</a></li>
+          <li><a ng-show="atMapPage" ng-click="godonate()">Donate</a></li>
+
+          <li><a ng-show="!notauthenciated" ng-click="goMyPost()">My POST</a></li>
+
+          <li>
+            <div type="button" ng-show="!notauthenciated" class="mailICON" aria-label="Left Align">
+              <i class="glyphicon glyphicon-envelope" ng-click="goCheckMessage()"></i>
+              <span class="button__badge">{{unreadMessageCount}}</span>
+            </div>
+          </li>
+
+          <li><a ng-show="notauthenciated" ng-click="toLoginPage()">Sign In</a></li>
+          <li><a ng-show="!notauthenciated" ng-click="logoff()">Log off</a></li>
+          <li><a ng-show="notauthenciated" ng-click="goToSignUp()">Join</a></li>
+        </ul>
+        <!--<form class="navbar-form navbar-right">-->
+          <!--<input type="text" class="form-control" placeholder="Search...">-->
+        <!--</form>-->
+      </div>
+    </div>
+  </nav>
+    <div ui-view></div>
+  </body>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>-->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <!--<script src="../../assets/js/vendor/holder.min.js"></script>-->
+    <!--&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;-->
+    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+
