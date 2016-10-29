@@ -1,6 +1,4 @@
-# AirPodsLost
+# Worship
 
+Simple worship app for CCIC-G11 memeber to register music workship time table 
 
-We are helping people who lost their beloved AirPods,
-You can sell, buy, donate your left AirPods when you lost one of them.
-You are welcome Apple!
